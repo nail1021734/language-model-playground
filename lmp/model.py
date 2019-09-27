@@ -32,8 +32,7 @@ class BaseModel(torch.nn.Module):
                                       dropout=config.dropout,
                                       batch_first=True)
 
-        # Forward passing
-        # self.linear = torch.nn.Linear(config.hidden_dim, config.embedding_dim)
+        # Linear layer
         self.linear = []
 
         for _ in range(config.num_linear_layers):
@@ -60,7 +59,6 @@ class BaseModel(torch.nn.Module):
         ######################################################################
         # 維度: (batch_size, sequence_length, vocabulary_size)
         ######################################################################
-        #ht = self.linear(ht)
         ht = self.sequential(ht)
         yt = ht.matmul(self.embedding_layer.weight.transpose(0, 1))
         return yt
